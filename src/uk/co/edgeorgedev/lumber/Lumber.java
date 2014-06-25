@@ -23,7 +23,7 @@ public class Lumber{
 		return options;
 	}
 
-	public void seLumbertOptions(LumberOptions options) {
+	public void setLumberOptions(LumberOptions options) {
 		this.options = options;
 	}
 

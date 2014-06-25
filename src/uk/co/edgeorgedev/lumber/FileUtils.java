@@ -23,42 +23,41 @@ public class FileUtils {
 	public static final String ANSI_WHITE = "\u0001B[37m";
 
 	public FileUtils(LumberFileOptions options){
-
 		if(options == null){
 			throw new IllegalArgumentException("Required param LumberFileOptions was null for FileUtils constructor");
 		}
-
 		this.options = options;
 	}
 
 	protected boolean writeFile(LumberedLog... logs){
 
-		if(options.getFileMode() == FileMode.APPEND){
+		if(logs.length == 0)
+			return true;
 
-			try{
-				File file = new File(options.getLogFilePath() + options.getLogFilename());
+		return createFile(options.getFileMode() == FileMode.APPEND, logs);
+	}
 
-				if(!file.exists()){
-					file.createNewFile();
-				}
+	private boolean createFile(boolean append, LumberedLog... logs) {
+		try{
+			File file = new File(options.getLogFilePath() + options.getLogFilename());
 
-				FileWriter fileWritter = new FileWriter(file.getName(),true);
-				BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
-				bufferWritter.write(options.generateLogs(logs));
-				bufferWritter.close();
-
-			}catch(IOException ioe){
-				ioe.printStackTrace();
-				return false;
+			if(!file.exists()){
+				file.createNewFile();
+			}else if(!append){
+				file.delete();
+				file.createNewFile();
 			}
+
+			FileWriter fileWritter = new FileWriter(file.getName(),true);
+			BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
+			bufferWritter.write(options.generateLogs(logs));
+			bufferWritter.close();
 
 			return true;
 
-		}else{
-
+		}catch(IOException ioe){
+			ioe.printStackTrace();
+			return false;
 		}
-
-		return false;
 	}
-
 }

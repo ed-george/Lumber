@@ -5,7 +5,6 @@ import uk.co.edgeorgedev.lumber.Lumber.LumberedLog;
 public class LumberOptions {
 
 	private String dateFormat;
-
 	
 	public LumberOptions(){}
 
@@ -19,10 +18,11 @@ public class LumberOptions {
 	
 	
 	public void createLog(LumberedLog... logs){
-		
+		// TODO Auto-generated method stub
 	}
 	
 	protected String generateLogs(LumberedLog... logs) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 	
