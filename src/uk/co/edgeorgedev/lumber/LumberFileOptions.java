@@ -1,16 +1,26 @@
 package uk.co.edgeorgedev.lumber;
 
-import android.util.Log;
 import uk.co.edgeorgedev.lumber.Lumber.LumberedLog;
+import android.content.Context;
+import android.util.Log;
 
 public class LumberFileOptions extends LumberOptions {
 
-	public enum FileMode {APPEND, OVERWRITE};
+	public enum FileMode {APPEND, OVERWRITE}
+
+	private static final String DEFAULT_LOGNAME = "lumber_log.log";
 
 	private String logFilename;
 	private String logFilePath;
 	private FileMode mode;
 	private boolean colorised;
+	private Context ctx;
+
+	public LumberFileOptions(Context ctx){
+		this.setContext(ctx);
+
+		reset();
+	}
 
 	public String getLogFilename() {
 		return logFilename;
@@ -71,7 +81,7 @@ public class LumberFileOptions extends LumberOptions {
 	private String colorise(LumberedLog log) {
 
 		String color;
-		
+
 		switch(log.getLevel()){
 		case Log.DEBUG :
 			color = FileUtils.ANSI_BLUE;
@@ -84,11 +94,11 @@ public class LumberFileOptions extends LumberOptions {
 		case Log.WARN :
 			color = FileUtils.ANSI_YELLOW;
 			break;
-		
+
 		case Log.INFO :
 			color = FileUtils.ANSI_CYAN;
 			break;
-		
+
 		case Log.VERBOSE :
 			color = FileUtils.ANSI_GREEN;
 			break;
@@ -98,6 +108,23 @@ public class LumberFileOptions extends LumberOptions {
 
 		}
 		return color + formatLog(log) + FileUtils.ANSI_RESET;
+	}
+
+	@Override
+	public void reset() {
+		super.reset();
+
+		this.colorised = false;
+		this.logFilename = DEFAULT_LOGNAME;
+		//		this.logFilePath = ctx.getFilesDir().getAbsolutePath();
+	}
+
+	protected Context getContext() {
+		return ctx;
+	}
+
+	protected void setContext(Context ctx) {
+		this.ctx = ctx;
 	}
 
 }

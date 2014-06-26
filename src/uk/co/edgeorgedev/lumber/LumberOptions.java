@@ -6,7 +6,7 @@ public class LumberOptions {
 
 	private String dateFormat;
 	
-	public LumberOptions(){}
+	public LumberOptions(){ reset(); }
 
 	public String getDateFormat() {
 		return dateFormat;
@@ -29,6 +29,10 @@ public class LumberOptions {
 	protected String formatLog(LumberedLog log) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void reset(){
+		this.dateFormat = "dd/MM/yyyy HH:mma";
 	}
 	
 }
